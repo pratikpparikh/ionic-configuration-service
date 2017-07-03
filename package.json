@@ -1,5 +1,5 @@
 {
-	"name": "ionic-configuration-service",
+	"name": "ionic-configuration-strategy-service",
 	"version": "0.0.0-development",
 	"description": "Configuration functionalities for apps built with Ionic framework",
 	"author": {
