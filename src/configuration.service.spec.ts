@@ -39,6 +39,7 @@ describe("ConfigurationService", () => {
 			},
 			simpleNumber: 42,
 			simpleString: "abc",
+			endpoint: "http://tdotts162use.eastus.cloudapp.azure.com:8789/appworks-livesite/api/configuration"
 		};
 		const jsonResponse = new Response(new ResponseOptions({
 			body: JSON.stringify(configuration),
@@ -136,8 +137,9 @@ describe("ConfigurationService", () => {
 		it("returns all keys from settings", async (done) => {
 			await configurationService.load("settings.json");
 			const keys = configurationService.getKeys();
-			expect(keys.length).toBe(3);
-			expect(keys).toEqual(["complexObject", "simpleNumber", "simpleString"]);
+			console.log('pratik testing '+keys);
+			expect(keys.length).toBe(4);
+			expect(keys).toEqual(["$.complexObject.prop1","$.complexObject.prop2", "$.simpleNumber", "$.simpleString"]);
 			done();
 		});
 	});

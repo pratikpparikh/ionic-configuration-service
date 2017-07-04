@@ -1,75 +1,80 @@
 {
-	"name": "ionic-configuration-strategy-service",
-	"version": "0.0.0-development",
-	"description": "Configuration functionalities for apps built with Ionic framework",
-	"author": {
-		"name": "Markus Wagner",
-		"email": "markus.wagner02@web.de"
-	},
-	"repository": "https://github.com/Ritzlgrmft/ionic-configuration-service.git",
-	"license": "MIT",
-	"private": false,
-	"keywords": [
-		"ionic",
-		"mobile",
-		"configuration",
-		"environizing"
-	],
-	"scripts": {
-		"build": "npm run clean && npm run compile",
-		"clean": "cd dist && ls | grep -v .npmignore | xargs rm && cd .. && rm -r aot",
-		"commit": "git-cz",
-		"compile": "ngc -p tsconfig.aot.json",
-		"karma": "karma start karma.conf.js --browsers Chrome",
-		"karma-once": "karma start karma.conf.js --browsers PhantomJS --single-run",
-		"lint": "tslint --project tsconfig.json --format verbose --type-check --exclude \"**/*.spec.ts\"",
-		"report-coverage": "codecov",
-		"semantic-release": "semantic-release pre && npm publish && semantic-release post",
-		"test": "npm run compile && npm run lint && npm run karma-once"
-	},
-	"files": [
-		"dist",
-		"src"
-	],
-	"main": "dist/index.js",
-	"typings": "dist/index.d.ts",
-	"peerDependencies": {
-		"@angular/core": "^4.0.0",
-		"@angular/http": "^4.0.0",
-		"rxjs": "^5.1.1",
-		"zone.js": "^0.8.4"
-	},
-	"devDependencies": {
-		"@angular/common": "4.0.0",
-		"@angular/compiler": "4.0.0",
-		"@angular/compiler-cli": "4.0.0",
-		"@angular/core": "4.0.0",
-		"@angular/forms": "4.0.0",
-		"@angular/http": "4.0.0",
-		"@angular/platform-browser": "4.0.0",
-		"@angular/platform-browser-dynamic": "4.0.0",
-		"rxjs": "5.1.1",
-		"zone.js": "0.8.4",
-		"@types/jasmine": "2.5.47",
-		"codecov": "2.1.0",
-		"codelyzer": "3.0.0",
-		"commitizen": "2.9.6",
-		"cz-conventional-changelog": "2.0.0",
-		"jasmine-core": "2.5.2",
-		"karma": "1.6.0",
-		"karma-chrome-launcher": "2.0.0",
-		"karma-jasmine": "1.1.0",
-		"karma-phantomjs-launcher": "1.0.4",
-		"karma-typescript": "3.0.1",
-		"reflect-metadata": "0.1.10",
-		"requirejs": "2.3.3",
-		"tslint": "5.1.0",
-		"typescript": "2.2.1",
-		"semantic-release": "6.3.2"
-	},
-	"config": {
-		"commitizen": {
-			"path": "cz-conventional-changelog"
-		}
-	}
+  "name": "ionic-configuration-strategy-service",
+  "version": "0.0.0-development",
+  "description": "Configuration functionalities for apps built with Ionic framework",
+  "author": {
+    "name": "Markus Wagner",
+    "email": "markus.wagner02@web.de"
+  },
+  "repository": "https://github.com/Ritzlgrmft/ionic-configuration-service.git",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "ionic",
+    "mobile",
+    "configuration",
+    "environizing"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "cd dist && ls | grep -v .npmignore | xargs rm && cd .. && rm -r aot",
+    "commit": "git-cz",
+    "compile": "ngc -p tsconfig.aot.json",
+    "karma": "karma start karma.conf.js --browsers Chrome",
+    "karma-once": "karma start karma.conf.js --browsers PhantomJS --single-run",
+    "lint": "tslint --project tsconfig.json --format verbose --type-check --exclude \"**/*.spec.ts\"",
+    "report-coverage": "codecov",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "test": "npm run compile && npm run lint && npm run karma-once"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "rxjs": "^5.1.1",
+    "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@angular/common": "4.0.0",
+    "@angular/compiler": "4.0.0",
+    "@angular/compiler-cli": "4.0.0",
+    "@angular/core": "4.0.0",
+    "@angular/forms": "4.0.0",
+    "@angular/http": "4.0.0",
+    "@angular/platform-browser": "4.0.0",
+    "@angular/platform-browser-dynamic": "4.0.0",
+    "@types/jasmine": "2.5.47",
+    "@types/jsonpath": "^0.1.29",
+    "codecov": "2.1.0",
+    "codelyzer": "3.0.0",
+    "commitizen": "2.9.6",
+    "cz-conventional-changelog": "2.0.0",
+    "jasmine-core": "2.5.2",
+    "karma": "1.6.0",
+    "karma-chrome-launcher": "2.0.0",
+    "karma-jasmine": "1.1.0",
+    "karma-phantomjs-launcher": "1.0.4",
+    "karma-typescript": "3.0.1",
+    "reflect-metadata": "0.1.10",
+    "requirejs": "2.3.3",
+    "rxjs": "5.1.1",
+    "semantic-release": "6.3.2",
+    "tslint": "5.1.0",
+    "typescript": "2.2.1",
+    "zone.js": "0.8.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "jsonpath": "^0.2.11",
+    "tsmonad": "^0.7.2"
+  }
 }

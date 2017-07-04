@@ -1,8 +1,9 @@
 ﻿import { Injectable } from "@angular/core";
-
 import { Http } from "@angular/http";
-
 import "rxjs/add/operator/toPromise";
+import * as jsonpath from "jsonpath";
+import {Either} from "tsmonad";
+
 
 /**
  * Service which encapsulates configuration functionalities for apps built with Ionic framework.
@@ -23,10 +24,26 @@ export class ConfigurationService {
 	 * @returns all available keys
 	 */
 	public getKeys(): string[] {
-		const keys: string[] = [];
-		// tslint:disable-next-line:forin
-		for (const key in this.configValues) {
-			keys.push(key);
+		var keys: string[] = [];
+		const anykeys: any[] = jsonpath.paths( this.configValues , "*");
+		this.getAggregatedKeys( this.configValues , anykeys, keys);
+		return keys;
+	}
+	
+	private getAggregatedKeys(currentData: any,anykeys: any[],keys: string[]): string[]{
+		if (anykeys !== null) {
+			for (let anykey of anykeys) {
+				if (anykey == null) {
+					continue;
+				}
+				const currentPath = jsonpath.stringify(anykey);
+				const currentAnyKeys: any[] = jsonpath.paths( this.configValues , currentPath+".*");
+				if (currentAnyKeys.length > 1){
+					this.getAggregatedKeys( currentData , currentAnyKeys, keys)
+				}else{
+					keys.push(currentPath);
+				}
+			}
 		}
 		return keys;
 	}

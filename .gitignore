@@ -6,6 +6,7 @@ dist/**/*.map
 dist/**/*.metadata.json
 node_modules/
 package/
+typings/
 
 *.tgz
 npm-debug.log

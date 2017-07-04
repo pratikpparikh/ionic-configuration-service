@@ -6,7 +6,8 @@
 			"es2015"
 		],
 		"types": [
-			"jasmine"
+			"jasmine",
+			"jsonpath"
 		],
 		"module": "commonjs",
 		"moduleResolution": "node",
