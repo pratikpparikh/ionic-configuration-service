@@ -39,8 +39,34 @@ describe("ConfigurationService", () => {
 			},
 			simpleNumber: 42,
 			simpleString: "abc",
-			endpoint: "http://tdotts162use.eastus.cloudapp.azure.com:8789/appworks-livesite/api/configuration"
+			endpointFetch: "http://happypratik.com/api/configuration"
 		};
+		const httpapiconfiguration = [
+			{
+				"key":"lscs.project.key",
+				"value":"developerlabs"
+			},
+			{
+				"key":"lscs.document.path",
+				"value":"/document/path"
+			},
+			{
+				"key":"lscs.v1.url",
+				"value":"http://happypratik.com/v1"
+			},
+			{
+				"key":"lscs.cors.enabled",
+				"value":"true"
+			},
+			{
+				"key":"lscs.cors.url",
+				"value":"http://happypratik.com/corsproxy.php?url="
+			}
+		];
+		const httpapiResponse = new Response(new ResponseOptions({
+			body: JSON.stringify(httpapiconfiguration),
+			status: 200,
+		}));
 		const jsonResponse = new Response(new ResponseOptions({
 			body: JSON.stringify(configuration),
 			status: 200,
@@ -57,7 +83,10 @@ describe("ConfigurationService", () => {
 				c.mockRespond(jsonResponse);
 			} else if (c.request.url.endsWith("settings.txt")) {
 				c.mockRespond(textResponse);
-			} else {
+			} else if (c.request.url.endsWith("http://happypratik.com/api/configuration")) {
+				c.mockRespond(httpapiResponse);
+			}
+			else {
 				c.mockRespond(notFoundResponse);
 			}
 		});
@@ -137,9 +166,38 @@ describe("ConfigurationService", () => {
 		it("returns all keys from settings", async (done) => {
 			await configurationService.load("settings.json");
 			const keys = configurationService.getKeys();
-			console.log('pratik testing '+keys);
 			expect(keys.length).toBe(4);
-			expect(keys).toEqual(["$.complexObject.prop1","$.complexObject.prop2", "$.simpleNumber", "$.simpleString"]);
+			expect(keys).toEqual(['complexObject', 'simpleNumber', 'simpleString', 'endpointFetch']);
+			done();
+		});
+	});
+	
+	describe("getObjectPaths(): string[]", () => {
+
+		it("returns all objectPaths from settings", async (done) => {
+			await configurationService.load("settings.json");
+			const objectPaths = configurationService.getObjectPaths();
+			expect(objectPaths.length).toBe(14);
+			expect(objectPaths).toEqual(['$.complexObject.prop1', '$.complexObject.prop2', '$.simpleNumber', '$.simpleString', '$.endpointFetch[0].key', '$.endpointFetch[0].value', '$.endpointFetch[1].key', '$.endpointFetch[1].value', '$.endpointFetch[2].key', '$.endpointFetch[2].value', '$.endpointFetch[3].key', '$.endpointFetch[3].value', '$.endpointFetch[4].key', '$.endpointFetch[4].value']);
+			done();
+		});
+	});
+	
+	describe("getObjectPaths(objectPathfilter): string[]", () => {
+
+		it("returns all objectPaths with object path from settings", async (done) => {
+			await configurationService.load("settings.json");
+			const objectPaths = configurationService.getObjectPaths("complexObject");
+			expect(objectPaths.length).toBe(2);
+			expect(objectPaths).toEqual(['$.complexObject.prop1', '$.complexObject.prop2']);
+			done();
+		});
+		
+		it("returns all objectPaths with json path syntax from settings", async (done) => {
+			await configurationService.load("settings.json");
+			const objectPaths = configurationService.getObjectPaths("$.complexObject");
+			expect(objectPaths.length).toBe(2);
+			expect(objectPaths).toEqual(['$.complexObject.prop1', '$.complexObject.prop2']);
 			done();
 		});
 	});
