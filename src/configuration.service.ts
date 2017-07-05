@@ -59,15 +59,25 @@ export class ConfigurationService {
 	/**
 	 * Get the configuration data for the given key.
 	 * @param T type of the returned value (default: object)
-	 * @param key key of the configuration data
+	 * @param key key or objectPath of the configuration data
+	 * @param objectPath objectPath flag to turn on jsonpath 
+	 *        value query of the configuration data
 	 * @returns configuration data for the given key
 	 */
-	public getValue<T>(key: string): T {
-		if (this.configValues !== undefined) {
-			return this.configValues[key];
-		} else {
+	public getValue<T>(key: string,objectPath: boolean = false): T {
+		if (typeof this.configValues === 'undefined'){
 			return undefined;
 		}
+		let value : any = undefined;
+		if (!objectPath) {
+			value = this.configValues[key];
+		} else {
+			value = jsonpath.value(this.configValues,key.startsWith('$.') ? key : '$.' + key);
+		}
+		if (value === null){
+			value = undefined;
+		}
+		return value;
 	}
 
 	/**
@@ -98,7 +108,6 @@ export class ConfigurationService {
 			}
 			const anykeys: any[] = jsonpath.paths( originalObject , "*");
 			this.configValues = await this.loadAggregatedValues( originalObject, anykeys, this.configUrls,this.objectPaths);
-			console.log(this.configValues);
 		} else {
 			throw new Error(`${configurationUrl} could not be loaded: ${response.status}`);
 		}

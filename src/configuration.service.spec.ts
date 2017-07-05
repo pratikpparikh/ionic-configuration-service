@@ -124,28 +124,28 @@ describe("ConfigurationService", () => {
 		});
 	});
 
-	describe("getValue(key: string): any", () => {
+	describe("getValue(key: string,objectPath: boolean = false): any", () => {
 
-		it("returns undefined if configuration is not loaded", () => {
+		it("returns undefined if configuration is not loaded with objectPath false", () => {
 			const value = configurationService.getValue("xxx");
 			expect(value).toBeUndefined();
 		});
 
-		it("returns value of existing simple string", async (done) => {
+		it("returns value of existing simple string with objectPath false", async (done) => {
 			await configurationService.load("settings.json");
 			const value = configurationService.getValue<string>("simpleString");
 			expect(value).toBe("abc");
 			done();
 		});
 
-		it("returns value of existing simple number", async (done) => {
+		it("returns value of existing simple number with objectPath false", async (done) => {
 			await configurationService.load("settings.json");
 			const value = configurationService.getValue<number>("simpleNumber");
 			expect(value).toBe(42);
 			done();
 		});
 
-		it("returns value of existing complex object", async (done) => {
+		it("returns value of existing complex object with objectPath false", async (done) => {
 			await configurationService.load("settings.json");
 			const value = configurationService.getValue<ComplexObject>("complexObject");
 			expect(value.prop1).toBe(1);
@@ -153,9 +153,46 @@ describe("ConfigurationService", () => {
 			done();
 		});
 
-		it("returns undefined if key does not exist", async (done) => {
+		it("returns undefined if key does not exist with objectPath false", async (done) => {
 			await configurationService.load("settings.json");
 			const value = configurationService.getValue("unknown");
+			expect(value).toBeUndefined();
+			done();
+		});
+	});
+	
+	describe("getValue(key: string,objectPath: boolean = true): any", () => {
+
+		it("returns undefined if configuration is not loaded with objectPath true", () => {
+			const value = configurationService.getValue("xxx",true);
+			expect(value).toBeUndefined();
+		});
+
+		it("returns value of existing simple string with objectPath true", async (done) => {
+			await configurationService.load("settings.json");
+			const value = configurationService.getValue<string>("simpleString",true);
+			expect(value).toBe("abc");
+			done();
+		});
+
+		it("returns value of existing simple number with objectPath true", async (done) => {
+			await configurationService.load("settings.json");
+			const value = configurationService.getValue<number>("simpleNumber",true);
+			expect(value).toBe(42);
+			done();
+		});
+
+		it("returns value of existing complex object with objectPath true", async (done) => {
+			await configurationService.load("settings.json");
+			const value = configurationService.getValue<ComplexObject>("complexObject",true);
+			expect(value.prop1).toBe(1);
+			expect(value.prop2).toBe("x");
+			done();
+		});
+
+		it("returns undefined if key does not exist with objectPath true", async (done) => {
+			await configurationService.load("settings.json");
+			const value = configurationService.getValue("unknown",true);
 			expect(value).toBeUndefined();
 			done();
 		});

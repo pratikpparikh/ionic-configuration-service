@@ -1,11 +1,15 @@
 {
-  "name": "ionic-configuration-strategy-service",
-  "version": "0.0.0-development",
+  "name": "ionic-configuration-service",
+  "version": "6.0.0",
   "description": "Configuration functionalities for apps built with Ionic framework",
   "author": {
     "name": "Markus Wagner",
     "email": "markus.wagner02@web.de"
   },
+  "contributors": [{
+	"name": "Pratik Parikh",
+	"email": "pratik.p.parikh@gmail.com"
+  }],
   "repository": "https://github.com/Ritzlgrmft/ionic-configuration-service.git",
   "license": "MIT",
   "private": false,
