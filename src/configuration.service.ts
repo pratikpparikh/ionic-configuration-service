@@ -52,7 +52,8 @@ export class ConfigurationService {
 			paths = this.objectPaths;
 		} else {
 			paths = this.objectPaths.filter((element) => {
-				return element.startsWith(objectPathfilter.startsWith("$.") ? objectPathfilter : "$." + objectPathfilter);
+				return element.startsWith(objectPathfilter.startsWith("[") ? "$" + objectPathfilter : objectPathfilter
+				.startsWith("$.") || objectPathfilter.startsWith("$") ? objectPathfilter : "$." + objectPathfilter);
 			});
 		}
 		return paths;
@@ -74,7 +75,8 @@ export class ConfigurationService {
 		if (!objectPath) {
 			value = this.configValues[key];
 		} else {
-			value = JsonPath.value(this.configValues, key.startsWith("$.") ? key : "$." + key);
+			value = JsonPath.value(this.configValues, key.startsWith("[") ? "$" + key : key.startsWith("$.") ||
+			key.startsWith("$") ? key :	"$." + key);
 		}
 		if (value === null) {
 			value = undefined;
